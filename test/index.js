@@ -33,7 +33,10 @@ const createServer = function (options, callback) {
     server.register({
         register: require('../'),
         options: options
-    }, callback);
+    }, (err) => {
+
+        callback(err, server);
+    });
 };
 
 describe('Status plugin with default options', () => {
@@ -67,12 +70,11 @@ describe('Status plugin with custom options', () => {
 
     let server;
 
-    //let shouldFail;
-
     before((done) => {
 
         createServer({
-            path: '/monitor/status'
+            path: '/monitor/status',
+            showFull: false
         }, (err, _server) => {
 
             server = _server;
@@ -82,7 +84,6 @@ describe('Status plugin with custom options', () => {
 
     it('should be running', (done) => {
 
-        //shouldFail = false;
         server.inject({
             method: 'GET',
             url: '/monitor/status'
@@ -95,13 +96,12 @@ describe('Status plugin with custom options', () => {
 
     it('should not be running', (done) => {
 
-        //shouldFail = true;
         server.inject({
             method: 'GET',
-            url: '/monitor/status'
+            url: '/status'
         }, (res) => {
 
-            expect(res.statusCode).to.equal(400);
+            expect(res.statusCode).to.equal(404);
             done();
         });
     });
