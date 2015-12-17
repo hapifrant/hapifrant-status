@@ -33,13 +33,10 @@ const createServer = function (options, callback) {
     server.register({
         register: require('../'),
         options: options
-    }, (err) => {
-
-        callback(err, server);
-    });
+    }, callback);
 };
 
-describe('Alive plugin with default options', () => {
+describe('Status plugin with default options', () => {
 
     let server;
 
@@ -52,11 +49,11 @@ describe('Alive plugin with default options', () => {
         });
     });
 
-    it('should be healthy', (done) => {
+    it('should be running', (done) => {
 
         server.inject({
             method: 'GET',
-            url: '/health'
+            url: '/status'
         }, (res) => {
 
             expect(res.statusCode).to.equal(200);
@@ -66,22 +63,16 @@ describe('Alive plugin with default options', () => {
 
 });
 
-describe('Alive plugin with custom options', () => {
+describe('Status plugin with custom options', () => {
 
     let server;
-    let shouldFail;
+
+    //let shouldFail;
 
     before((done) => {
 
         createServer({
-            path: '/monitor/health',
-            healthCheck: (_server, callback) => {
-
-                if (shouldFail) {
-                    return callback(new Error('Something went wrong!'));
-                }
-                callback();
-            }
+            path: '/monitor/status'
         }, (err, _server) => {
 
             server = _server;
@@ -89,12 +80,12 @@ describe('Alive plugin with custom options', () => {
         });
     });
 
-    it('should be healthy', (done) => {
+    it('should be running', (done) => {
 
-        shouldFail = false;
+        //shouldFail = false;
         server.inject({
             method: 'GET',
-            url: '/monitor/health'
+            url: '/monitor/status'
         }, (res) => {
 
             expect(res.statusCode).to.equal(200);
@@ -102,12 +93,12 @@ describe('Alive plugin with custom options', () => {
         });
     });
 
-    it('should not be healthy', (done) => {
+    it('should not be running', (done) => {
 
-        shouldFail = true;
+        //shouldFail = true;
         server.inject({
             method: 'GET',
-            url: '/monitor/health'
+            url: '/monitor/status'
         }, (res) => {
 
             expect(res.statusCode).to.equal(400);

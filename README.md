@@ -1,4 +1,4 @@
-# hapifrant-health
+# hapifrant-status
 [![Build Status](https://travis-ci.org/idosh/hapi-alive.svg)](https://travis-ci.org/idosh/hapi-alive)
 [![Code Climate](https://codeclimate.com/github/idosh/hapi-alive/badges/gpa.svg)](https://codeclimate.com/github/idosh/hapi-alive)
 [![Test Coverage](https://codeclimate.com/github/idosh/hapi-alive/badges/coverage.svg)](https://codeclimate.com/github/idosh/hapi-alive/coverage)
