@@ -1,0 +1,46 @@
+{
+  "name": "hapifrant-status",
+  "version": "1.0.0",
+  "description": "Status route for your Hapifrant microservice",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "lab -a code -t 100 -L -r console -o stdout -r lcov -o coverage/lcov.info",
+    "test-html": "mkdir -p coverage && ./node_modules/.bin/lab -a code -t 100 -L -r html > coverage/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hapifrant/hapifrant-status.git"
+  },
+  "keywords": [
+    "hapi",
+    "hapifrant",
+    "health",
+    "status",
+    "plugin",
+    "monitor"
+  ],
+  "author": {
+    "name": "Marcos Sanz"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hapifrant/hapifrant-status/issues"
+  },
+  "homepage": "https://github.com/hapifrant/hapifrant-status#readme",
+  "devDependencies": {
+    "code": "^1.5.0",
+    "hapi": "^11.0.2",
+    "lab": "^7.0.0"
+  },
+  "dependencies": {
+    "boom": "^2.10.0",
+    "hoek": "^2.16.3",
+    "joi": "^6.9.1"
+  },
+  "readme": "# hapifrant-health\n[![Build Status](https://travis-ci.org/idosh/hapi-alive.svg)](https://travis-ci.org/idosh/hapi-alive)\n[![Code Climate](https://codeclimate.com/github/idosh/hapi-alive/badges/gpa.svg)](https://codeclimate.com/github/idosh/hapi-alive)\n[![Test Coverage](https://codeclimate.com/github/idosh/hapi-alive/badges/coverage.svg)](https://codeclimate.com/github/idosh/hapi-alive/coverage)\n\n> Health route for your hapi.js server\n\n## Usage\n\n### Install from NPM\n\n```sh\nnpm install --save hapi-alive\n```\n\n### Example\n\n```javascript\nvar Hapi = require('hapi');\n\nvar server = new Hapi.Server();\nserver.connection({ port: 3000 });\n// Register alive plugin\nserver.register({\n    register: require('hapi-alive'),\n    options: {\n        path: '/health' //Health route path\n        tags: ['health', 'monitor'],\n        healthCheck: function(server, callback) {\n            //Here you should preform your health checks\n            //If something went wrong provide the callback with an error\n            callback();\n        }\n    }\n}, function (err) {\n\n    if(err){\n      console.log(err);\n    }\n});\n\nserver.start(function () {\n\n  console.log('Server running at:', server.info.uri);\n});\n```\n\n### Calling the health route\n\nThe health route is exposed using `GET` method in a given path (`/health` by default).\n\nWhen the server is healthy the response status code should be 200.\n\nWhen the health check returns error the status code should be 400 and the payload should contain the error title.\n",
+  "readmeFilename": "README.md",
+  "_id": "hapifrant-status@1.0.0",
+  "_shasum": "255fe0f7c06deda70b6e9eac61b94d3f02b8dbb7",
+  "_from": "node_modules/hapifrant-status",
+  "_resolved": "file:node_modules/hapifrant-status"
+}
