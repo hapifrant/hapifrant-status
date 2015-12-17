@@ -1,16 +1,16 @@
 # hapifrant-status
-[![Build Status](https://travis-ci.org/idosh/hapi-alive.svg)](https://travis-ci.org/idosh/hapi-alive)
-[![Code Climate](https://codeclimate.com/github/idosh/hapi-alive/badges/gpa.svg)](https://codeclimate.com/github/idosh/hapi-alive)
-[![Test Coverage](https://codeclimate.com/github/idosh/hapi-alive/badges/coverage.svg)](https://codeclimate.com/github/idosh/hapi-alive/coverage)
+[![Build Status](https://travis-ci.org/hapifrant/hapifrant-status.svg)](https://travis-ci.org/hapifrant/hapifrant-status)
+[![Code Climate](https://codeclimate.com/github/hapifrant/hapifrant-status/badges/gpa.svg)](https://codeclimate.com/github/hapifrant/hapifrant-status)
+[![Test Coverage](https://codeclimate.com/github/hapifrant/hapifrant-status/badges/coverage.svg)](https://codeclimate.com/github/hapifrant/hapifrant-status/coverage)
 
-> Health route for your hapi.js server
+> Status route for your Hapifrant microservice
 
 ## Usage
 
 ### Install from NPM
 
 ```sh
-npm install --save hapi-alive
+npm install --save hapifrant-status
 ```
 
 ### Example
@@ -20,17 +20,13 @@ var Hapi = require('hapi');
 
 var server = new Hapi.Server();
 server.connection({ port: 3000 });
-// Register alive plugin
+// Register status plugin
 server.register({
-    register: require('hapi-alive'),
+    register: require('hapifrant-status'),
     options: {
-        path: '/health' //Health route path
-        tags: ['health', 'monitor'],
-        healthCheck: function(server, callback) {
-            //Here you should preform your health checks
-            //If something went wrong provide the callback with an error
-            callback();
-        }
+        path: '/status' // Status route path
+        tags: ['status', 'monitor'],
+        showFull: false
     }
 }, function (err) {
 
@@ -47,8 +43,6 @@ server.start(function () {
 
 ### Calling the health route
 
-The health route is exposed using `GET` method in a given path (`/health` by default).
+The status route is exposed using `GET` method in a given path (`/status` by default).
 
-When the server is healthy the response status code should be 200.
-
-When the health check returns error the status code should be 400 and the payload should contain the error title.
+When the server is running the response status code should be 200.
